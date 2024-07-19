@@ -1,0 +1,111 @@
+alignment top_right
+background yes
+border_width 0
+cpu_avg_samples 2
+default_color ffffff
+draw_outline no
+draw_borders no
+draw_shades no
+use_xft yes
+xftfont Ubuntu:size=9
+gap_x 0
+gap_y 30
+update_interval 300
+
+# size of text area
+minimum_size 260 100
+maximum_width 235
+max_text_width 240
+
+net_avg_samples 2
+no_buffers yes
+out_to_console no
+out_to_stderr no
+extra_newline no
+own_window yes
+own_window_transparent yes
+own_window_class Conky
+own_window_type normal
+own_window_hints undecorated,sticky,skip_taskbar,skip_pager,below
+stippled_borders 0
+update_interval 1.0
+uppercase no
+use_spacer none
+show_graph_scale no
+show_graph_range no
+
+# Use double buffering (reduces flicker, may not work for everyone)
+double_buffer yes
+
+#own_window_colour no
+pdate_interval 600
+
+own_window_argb_value 0
+own_window_argb_visual yes
+own_window_colour 000000
+TEXT
+#${font Ubuntu:size=14}Today  is  ${time %A}$font
+#${font Ubuntu:size=16}${time %I:%M}${font Ubuntu:size=9}${time %S}$font  ${offset 10}${time %B %d, %Y}
+#${hr 1,1}
+${font Ubuntu:size=14}${color 1793D1}CPU  $cpu% ${alignr} ${execi 5 sensors | grep 'cpu_fan' | awk '{print $2}'} RPM${alignr}
+$freq_g GHz${alignr}${execi 5 sensors | grep 'Tctl' | awk '{print $2}'}${alignr}$font$color
+${cpugraph cpu1 25, 26 1793D1 ffffff} ${cpugraph cpu2 25, 26 1793D1 ffffff} ${cpugraph cpu3 25, 26 1793D1 ffffff} ${cpugraph cpu4 25, 26 1793D1 ffffff} ${cpugraph cpu5 25, 26 1793D1 ffffff} ${cpugraph cpu6 25, 26 1793D1 ffffff} ${cpugraph cpu7 25, 26 1793D1 ffffff} ${cpugraph cpu8 25, 26 1793D1 ffffff}
+${cpugraph cpu9 25, 26 1793D1 ffffff} ${cpugraph cpu10 25, 26 1793D1 ffffff} ${cpugraph cpu11 25, 26 1793D1 ffffff} ${cpugraph cpu12 25, 26 1793D1 ffffff} ${cpugraph cpu13 25, 26 1793D1 ffffff} ${cpugraph cpu14 25, 26 1793D1 ffffff} ${cpugraph cpu15 25, 26 1793D1 ffffff} ${cpugraph cpu16 25, 26 1793D1 ffffff}
+${top name 1} $alignr ${top cpu 1}%
+${top name 2} $alignr ${top cpu 2}%
+${top name 3} $alignr ${top cpu 3}%
+${top name 4} $alignr ${top cpu 4}%
+${top name 5} $alignr ${top cpu 5}%
+${top name 6} $alignr ${top cpu 6}%
+${top name 7} $alignr ${top cpu 7}%
+${top name 8} $alignr ${top cpu 8}%
+${top name 9} $alignr ${top cpu 9}%
+${top name 10} $alignr ${top cpu 10}%
+${hr 1,1}
+${font Ubuntu:size=14}${color 1793D1}RTX 3050 : ${execi 5 nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits}% ${alignr} ${execi 5 sensors | grep 'gpu_fan' | awk '{print $2}'} RPM${alignr}
+${execi 5 nvidia-smi --query-gpu=clocks.sm --format=csv,noheader,nounits} MHz ${alignr}${execi 5 nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits} C ${alignr}$font$color
+${voffset 5}Memory Usage ${goto 100}: ${execi 5 nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits} MiB / ${execi 5 nvidia-smi --query-gpu=memory.total --format=csv,noheader,nounits} MiB
+Memory Clock ${goto 100}: ${execi 5 nvidia-smi --query-gpu=clocks.mem --format=csv,noheader,nounits} MHz
+Power Usage ${goto 100}: ${execi 5 nvidia-smi --query-gpu=power.draw --format=csv,noheader,nounits} W
+${hr 1,1}
+${font Ubuntu:size=14}${color 1793D1}RAM${alignr}$font$color ${membar 14, 80}$alignr$memperc%
+#${execi 1/home/chirag/.conky/aggregate_mem_by_app.sh}
+${voffset 5}${top_mem name 1} $alignr ${top_mem mem_res 1}
+${top_mem name 2} $alignr ${top_mem mem_res 2}
+${top_mem name 3} $alignr ${top_mem mem_res 3}
+${top_mem name 4} $alignr ${top_mem mem_res 4}
+${top_mem name 5} $alignr ${top_mem mem_res 5}
+${top_mem name 6} $alignr ${top_mem mem_res 6}
+${top_mem name 7} $alignr ${top_mem mem_res 7}
+${top_mem name 8} $alignr ${top_mem mem_res 8}
+${top_mem name 9} $alignr ${top_mem mem_res 9}
+${top_mem name 10} $alignr ${top_mem mem_res 10}
+${hr 1,1}
+${font Ubuntu:size=14}${color 1793D1}DISK$font$color :${diskio} 	${alignr}${color}${diskiograph 15,120}$alignr
+${hr 1,1}
+${font Ubuntu:size=14}${color 1793D1}NETWORK$font$color 	  ${alignr}${color}${wireless_link_bar 14,90 wlan0}  ${wireless_link_qual_perc wlan0}%$alignr
+${voffset 5}${color1}SSID           ${goto 100}: ${color}${wireless_essid wlan0} ${color1}${alignr}
+${color1}IP	        ${goto 100}: ${exec curl -s ipv4.icanhazip.com}
+#${color1}Location	${goto 100}: ${exec curl -s ipinfo.io/city}, ${exec curl -s ipinfo.io/country}
+${color1}Bitrate        ${goto 100}: ${color}${wireless_bitrate wlan0}
+${color1}Total Down/Up  ${goto 100}: ${color}${totaldown wlan0} / ${totalup wlan0} 
+${color1}Speed Down/Up  ${goto 100}: ${color}${downspeed wlan0} / ${upspeed wlan0}
+${hr 1,1}
+${font Ubuntu:size=14}${color 1793D1}LINUX $kernel$font$color
+${voffset 5}Uptime: $uptime
+Process: $processes ($running_processes running)
+${hr 1,1}
+${font Ubuntu:size=14}${color 1793D1}UPDATES$font$color
+${voffset 5}System: ${execi 60 checkupdates | wc -l}   AUR: ${execi 60 paru -Qua | wc -l}   Flatpak: ${execi 60 flatpak update | tail -n 3 | head -n 1 | awk '{print int($1)}'}
+${voffset 2}Last Updated: ${color 1793D1}${execi 60 /home/chirag/.conky/last_yaay_run.sh}$color
+${hr 1,1}
+${voffset 2}${font Ubuntu:size=14}${color 1793D1}ARCH LINUX NEWS$font$color
+${voffset 2}${execi 3600 curl -sL https://www.archlinux.org/feeds/news/ | grep -oP '(?<=<title>).*?(?=</title>)' | sed '1d' | head -n 3 | sed ':a;N;$!ba;s/\n/\n/g'}
+
+
+
+
+
+
+
+
